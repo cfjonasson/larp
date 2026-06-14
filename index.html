@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creator Commerce Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * { box-sizing: border-box; font-family: Inter, system-ui, sans-serif; }
+
+    body {
+      margin: 0;
+      background: #070b14;
+      color: #eaf0ff;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    aside {
+      background: #0b1020;
+      border-right: 1px solid #1e293b;
+      padding: 24px;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 900;
+      margin-bottom: 32px;
+    }
+
+    .logo span { color: #4ade80; }
+
+    nav a {
+      display: block;
+      padding: 13px 14px;
+      margin-bottom: 8px;
+      border-radius: 12px;
+      color: #94a3b8;
+      text-decoration: none;
+    }
+
+    nav a.active, nav a:hover {
+      background: #162036;
+      color: white;
+    }
+
+    main { padding: 28px; }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+      gap: 16px;
+    }
+
+    h1 { margin: 0; font-size: 31px; }
+
+    .muted { color: #94a3b8; }
+
+    .demo-badge {
+      background: rgba(251, 191, 36, .12);
+      color: #fbbf24;
+      border: 1px solid rgba(251, 191, 36, .35);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 11px 14px;
+      border-radius: 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    button.secondary {
+      background: #172036;
+      color: #cbd5e1;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, #111827, #0b1220);
+      border: 1px solid #1f2937;
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.25);
+    }
+
+    .card small { color: #94a3b8; }
+
+    .value {
+      font-size: 28px;
+      font-weight: 900;
+      margin-top: 8px;
+    }
+
+    .up { color: #4ade80; font-size: 13px; margin-top: 8px; }
+    .down { color: #fb7185; font-size: 13px; margin-top: 8px; }
+
+    .content {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    canvas { width: 100% !important; max-height: 330px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 14px 10px;
+      border-bottom: 1px solid #1e293b;
+      text-align: left;
+    }
+
+    th {
+      color: #94a3b8;
+      font-size: 13px;
+    }
+
+    .pill {
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      background: rgba(74, 222, 128, .13);
+      color: #4ade80;
+    }
+
+    .footer-note {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      background: rgba(251, 191, 36, .12);
+      color: #fbbf24;
+      border: 1px solid rgba(251, 191, 36, .35);
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 12px;
+      backdrop-filter: blur(10px);
+    }
+
+    @media (max-width: 950px) {
+      .app { grid-template-columns: 1fr; }
+      aside { display: none; }
+      .grid, .content { grid-template-columns: 1fr; }
+      .topbar { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <aside>
+      <div class="logo">Creator<span>Metrics</span></div>
+      <nav>
+        <a class="active" href="#">Dashboard</a>
+        <a href="#">Products</a>
+        <a href="#">Orders</a>
+        <a href="#">Customers</a>
+        <a href="#">Analytics</a>
+        <a href="#">Marketing</a>
+        <a href="#">Payouts</a>
+        <a href="#">Settings</a>
+      </nav>
+    </aside>
+
+    <main>
+      <div class="topbar">
+        <div>
+          <h1>God Kväll Filip Jonasson</h1>
+          <p class="muted"Creator Commerance Dashboard</p>
+          <p class="muted" style="font-size:13px;">Last updated: <span id="lastUpdated"></span></p>
+        </div>
+
+        <div class="actions">
+          <div class="demo-badge">● Simulated Data</div>
+          <button onclick="randomize()">Refresh Demo Data</button>
+          <button class="secondary" onclick="alert('Demo CSV export generated')">Export CSV</button>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <small>Demo Revenue</small>
+          <div class="value" id="revenue">$128,430</div>
+          <div class="up">▲ 38.4% vs förra veckan</div>
+        </div>
+
+        <div class="card">
+          <small>Demo Net Profit</small>
+          <div class="value" id="profit">$72,910</div>
+          <div class="up">▲ 24.8% efter ad spend</div>
+        </div>
+
+        <div class="card">
+          <small>Demo Orders</small>
+          <div class="value" id="orders">4,928</div>
+          <div class="up">▲ 612 idag</div>
+        </div>
+
+        <div class="card">
+          <small>Conversion Rate</small>
+          <div class="value" id="conversion">8.7%</div>
+          <div class="down">▼ 0.4% checkout dropoff</div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="card">
+          <h2>Revenue Overview</h2>
+          <canvas id="revenueChart"></canvas>
+        </div>
+
+        <div class="card">
+          <h2>Live Demo Alerts</h2>
+          <p>🟢 143 besökare online</p>
+          <p>📈 Trafiken ökade 18% senaste timmen</p>
+          <p>💸 Demo payout pending: $18,240</p>
+          <p>📦 72 ordrar väntar på fulfillment</p>
+          <p>🚀 ROAS toppar på 6.9x idag</p>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="card">
+          <h2>Top Demo Products</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Produkt</th>
+                <th>Revenue</th>
+                <th>Orders</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Smart Bottle Pro</td>
+                <td>$42,880</td>
+                <td>1,284</td>
+                <td><span class="pill">Scaling</span></td>
+              </tr>
+              <tr>
+                <td>LED Desk Lamp</td>
+                <td>$31,220</td>
+                <td>942</td>
+                <td><span class="pill">Profitable</span></td>
+              </tr>
+              <tr>
+                <td>Portable Blender</td>
+                <td>$24,760</td>
+                <td>731</td>
+                <td><span class="pill">Trending</span></td>
+              </tr>
+              <tr>
+                <td>Posture Corrector</td>
+                <td>$18,420</td>
+                <td>506</td>
+                <td><span class="pill">Testing</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <h2>Marketing Metrics</h2>
+          <p><strong>ROAS:</strong> 5.8x</p>
+          <p><strong>Ad Spend:</strong> $12,480</p>
+          <p><strong>CTR:</strong> 4.9%</p>
+          <p><strong>CPA:</strong> $7.21</p>
+          <p><strong>AOV:</strong> $38.40</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="footer-note">Demo dashboard · Simulated data only</div>
+
+  <script>
+    const revenueChart = new Chart(document.getElementById("revenueChart"), {
+      type: "line",
+      data: {
+        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        datasets: [{
+          label: "Revenue",
+          data: [12400, 18800, 24200, 31800, 40200, 55800, 72400],
+          borderWidth: 3,
+          tension: 0.4,
+          fill: true
+        }]
+      },
+      options: {
+        plugins: {
+          legend: {
+            labels: { color: "#cbd5e1" }
+          }
+        },
+        scales: {
+          x: {
+            ticks: { color: "#94a3b8" },
+            grid: { color: "#1e293b" }
+          },
+          y: {
+            ticks: { color: "#94a3b8" },
+            grid: { color: "#1e293b" }
+          }
+        }
+      }
+    });
+
+    function money(num) {
+      return "$" + num.toLocaleString("en-US");
+    }
+
+    function randomize() {
+      const revenue = Math.floor(Math.random() * 90000) + 90000;
+      const profit = Math.floor(revenue * 0.55);
+      const orders = Math.floor(Math.random() * 3500) + 2500;
+      const conversion = (Math.random() * 4 + 5).toFixed(1);
+
+      document.getElementById("revenue").textContent = money(revenue);
+      document.getElementById("profit").textContent = money(profit);
+      document.getElementById("orders").textContent = orders.toLocaleString("en-US");
+      document.getElementById("conversion").textContent = conversion + "%";
+
+      revenueChart.data.datasets[0].data = Array.from(
+        { length: 7 },
+        () => Math.floor(Math.random() * 65000) + 10000
+      );
+
+      revenueChart.update();
+
+      document.getElementById("lastUpdated").textContent =
+        new Date().toLocaleString();
+    }
+
+    document.getElementById("lastUpdated").textContent =
+      new Date().toLocaleString();
+  </script>
+</body>
+</html>
