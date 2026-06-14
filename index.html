@@ -9,180 +9,234 @@
   <style>
     * {
       box-sizing: border-box;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     body {
       margin: 0;
-      background: #f4f7fb;
-      color: #0f172a;
+      background: #f6f6f7;
+      color: #202223;
     }
 
     .app {
       display: grid;
-      grid-template-columns: 280px 1fr;
+      grid-template-columns: 240px 1fr;
       min-height: 100vh;
     }
 
     aside {
       background: #ffffff;
-      border-right: 1px solid #e5e7eb;
-      padding: 26px 20px;
+      border-right: 1px solid #dfe3e8;
+      padding: 18px 14px;
     }
 
     .logo {
-      font-size: 24px;
-      font-weight: 900;
-      margin-bottom: 34px;
-      color: #0f172a;
+      font-size: 20px;
+      font-weight: 800;
+      padding: 10px 12px 22px;
     }
 
     .logo span {
-      color: #2563eb;
+      color: #008060;
     }
 
     nav a {
       display: flex;
       align-items: center;
-      padding: 13px 14px;
-      margin-bottom: 6px;
-      border-radius: 12px;
-      color: #64748b;
+      gap: 10px;
+      padding: 10px 12px;
+      margin-bottom: 3px;
+      border-radius: 8px;
+      color: #42474c;
       text-decoration: none;
-      font-weight: 700;
       font-size: 14px;
+      font-weight: 600;
     }
 
-    nav a.active,
+    nav a.active {
+      background: #ebf9f4;
+      color: #008060;
+    }
+
     nav a:hover {
-      background: #eff6ff;
-      color: #2563eb;
+      background: #f1f2f3;
     }
 
     main {
-      padding: 30px;
+      padding: 24px 32px;
     }
 
     .topbar {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 28px;
-      gap: 18px;
+      margin-bottom: 22px;
+      gap: 20px;
     }
 
     h1 {
       margin: 0;
-      font-size: 32px;
-      letter-spacing: -0.04em;
+      font-size: 28px;
+      font-weight: 750;
+      letter-spacing: -0.03em;
     }
 
     h2 {
-      margin-top: 0;
-      font-size: 18px;
-      letter-spacing: -0.02em;
+      margin: 0 0 16px;
+      font-size: 16px;
+      font-weight: 750;
     }
 
     .muted {
-      color: #64748b;
-      margin: 7px 0;
+      color: #6d7175;
+      margin: 6px 0;
+      font-size: 14px;
     }
 
     .actions {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
       align-items: center;
     }
 
-    .demo-badge {
-      background: #ecfdf5;
-      color: #047857;
-      border: 1px solid #bbf7d0;
-      padding: 10px 14px;
-      border-radius: 999px;
-      font-weight: 800;
+    .badge {
+      background: #e3f1df;
+      color: #108043;
+      border: 1px solid #bbe5b3;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-weight: 700;
       font-size: 13px;
     }
 
     button {
-      background: #2563eb;
+      background: #202223;
       color: white;
       border: none;
-      padding: 11px 16px;
-      border-radius: 12px;
-      font-weight: 800;
+      padding: 9px 14px;
+      border-radius: 8px;
+      font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.22);
     }
 
     button.secondary {
       background: #ffffff;
-      color: #334155;
-      border: 1px solid #e2e8f0;
-      box-shadow: none;
+      color: #202223;
+      border: 1px solid #babfc3;
+    }
+
+    .overview {
+      background: #ffffff;
+      border: 1px solid #dfe3e8;
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .overview-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      gap: 16px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #f1f2f3;
+      color: #42474c;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .tab.active {
+      background: #202223;
+      color: #ffffff;
     }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-      margin-bottom: 22px;
-    }
-
-    .card {
+      border: 1px solid #dfe3e8;
+      border-radius: 12px;
+      overflow: hidden;
       background: #ffffff;
-      border: 1px solid #e5e7eb;
-      border-radius: 20px;
-      padding: 22px;
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
+      margin-bottom: 18px;
     }
 
-    .card small {
-      color: #64748b;
-      font-weight: 800;
-      text-transform: uppercase;
-      font-size: 11px;
-      letter-spacing: .08em;
+    .metric {
+      padding: 18px;
+      border-right: 1px solid #dfe3e8;
+    }
+
+    .metric:last-child {
+      border-right: none;
+    }
+
+    .metric small {
+      color: #6d7175;
+      font-size: 13px;
+      font-weight: 650;
     }
 
     .value {
-      font-size: 31px;
-      font-weight: 950;
-      margin-top: 10px;
+      font-size: 30px;
+      font-weight: 780;
+      margin-top: 8px;
       letter-spacing: -0.04em;
     }
 
-    .up,
-    .down {
-      display: inline-flex;
-      margin-top: 12px;
-      padding: 6px 9px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 800;
+    .up, .down {
+      margin-top: 8px;
+      font-size: 13px;
+      font-weight: 700;
     }
 
     .up {
-      color: #047857;
-      background: #ecfdf5;
+      color: #008060;
     }
 
     .down {
-      color: #be123c;
-      background: #fff1f2;
+      color: #d72c0d;
     }
 
     .content {
       display: grid;
-      grid-template-columns: 2fr 1fr;
+      grid-template-columns: 2.1fr 1fr;
       gap: 18px;
-      margin-bottom: 22px;
+      margin-bottom: 18px;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #dfe3e8;
+      border-radius: 12px;
+      padding: 18px;
     }
 
     canvas {
       width: 100% !important;
-      max-height: 330px;
+      max-height: 360px;
+    }
+
+    .activity p {
+      padding: 12px 0;
+      margin: 0;
+      border-bottom: 1px solid #edf0f2;
+      color: #42474c;
+      font-size: 14px;
+    }
+
+    .activity p:last-child {
+      border-bottom: none;
     }
 
     table {
@@ -191,32 +245,53 @@
       font-size: 14px;
     }
 
-    th,
-    td {
-      padding: 15px 10px;
-      border-bottom: 1px solid #eef2f7;
+    th, td {
+      padding: 14px 10px;
+      border-bottom: 1px solid #edf0f2;
       text-align: left;
     }
 
     th {
-      color: #64748b;
+      color: #6d7175;
       font-size: 12px;
+      font-weight: 750;
       text-transform: uppercase;
-      letter-spacing: .08em;
+      letter-spacing: .04em;
     }
 
     td {
-      color: #0f172a;
-      font-weight: 650;
+      font-weight: 600;
+      color: #202223;
     }
 
     .pill {
-      padding: 7px 11px;
+      padding: 5px 9px;
       border-radius: 999px;
       font-size: 12px;
-      font-weight: 900;
-      background: #eff6ff;
-      color: #2563eb;
+      font-weight: 750;
+      background: #e3f1df;
+      color: #108043;
+    }
+
+    .finance-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .finance-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 13px 0;
+      border-bottom: 1px solid #edf0f2;
+      font-size: 14px;
+    }
+
+    .finance-row:last-child {
+      border-bottom: none;
+    }
+
+    .finance-row strong {
+      font-weight: 750;
     }
 
     .footer-note {
@@ -224,13 +299,13 @@
       right: 18px;
       bottom: 18px;
       background: #ffffff;
-      color: #475569;
-      border: 1px solid #e2e8f0;
-      padding: 10px 14px;
-      border-radius: 999px;
+      border: 1px solid #dfe3e8;
+      color: #42474c;
+      padding: 9px 13px;
+      border-radius: 8px;
       font-size: 12px;
-      font-weight: 800;
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.1);
+      font-weight: 700;
+      box-shadow: 0 8px 24px rgba(0,0,0,.08);
     }
 
     @media (max-width: 1050px) {
@@ -238,12 +313,16 @@
         grid-template-columns: repeat(2, 1fr);
       }
 
+      .metric {
+        border-bottom: 1px solid #dfe3e8;
+      }
+
       .content {
         grid-template-columns: 1fr;
       }
     }
 
-    @media (max-width: 750px) {
+    @media (max-width: 760px) {
       .app {
         grid-template-columns: 1fr;
       }
@@ -253,15 +332,20 @@
       }
 
       main {
-        padding: 20px;
+        padding: 18px;
+      }
+
+      .topbar,
+      .overview-head {
+        flex-direction: column;
       }
 
       .grid {
         grid-template-columns: 1fr;
       }
 
-      .topbar {
-        flex-direction: column;
+      .metric {
+        border-right: none;
       }
     }
   </style>
@@ -272,13 +356,14 @@
     <aside>
       <div class="logo">Creator<span>Metrics</span></div>
       <nav>
-        <a class="active" href="#">Dashboard</a>
-        <a href="#">Products</a>
+        <a class="active" href="#">Overview</a>
         <a href="#">Orders</a>
+        <a href="#">Products</a>
         <a href="#">Customers</a>
-        <a href="#">Analytics</a>
+        <a href="#">Content</a>
         <a href="#">Marketing</a>
-        <a href="#">Payouts</a>
+        <a href="#">Analytics</a>
+        <a href="#">Finance</a>
         <a href="#">Settings</a>
       </nav>
     </aside>
@@ -286,59 +371,75 @@
     <main>
       <div class="topbar">
         <div>
-          <h1>God Kväll Filip Jonasson</h1>
-          <p class="muted">Creator Commerce Dashboard</p>
+          <h1>Overview</h1>
+          <p class="muted">God Kväll Filip Jonasson</p>
           <p class="muted" style="font-size:13px;">Last updated: <span id="lastUpdated"></span></p>
         </div>
 
         <div class="actions">
-          <div class="demo-badge">● Data Live</div>
+          <div class="badge">● Data Live</div>
           <button onclick="randomize()">Refresh Data</button>
           <button class="secondary" onclick="alert('CSV export generated')">Export CSV</button>
         </div>
       </div>
 
-      <div class="grid">
-        <div class="card">
-          <small>Revenue</small>
-          <div class="value" id="revenue">128 430 KR</div>
-          <div class="up">▲ 38.4% vs förra veckan</div>
+      <section class="overview">
+        <div class="overview-head">
+          <div>
+            <h2>Performance summary</h2>
+            <p class="muted">Sales, orders and marketing performance</p>
+          </div>
+
+          <div class="tabs">
+            <div class="tab">Today</div>
+            <div class="tab active">7 days</div>
+            <div class="tab">30 days</div>
+            <div class="tab">Custom</div>
+          </div>
         </div>
 
-        <div class="card">
-          <small>Net Profit</small>
-          <div class="value" id="profit">72 910 KR</div>
-          <div class="up">▲ 24.8% efter annonser</div>
+        <div class="grid">
+          <div class="metric">
+            <small>Revenue</small>
+            <div class="value" id="revenue">128 430 KR</div>
+            <div class="up">▲ 38.4% vs förra veckan</div>
+          </div>
+
+          <div class="metric">
+            <small>Net Profit</small>
+            <div class="value" id="profit">72 910 KR</div>
+            <div class="up">▲ 24.8% efter annonser</div>
+          </div>
+
+          <div class="metric">
+            <small>Orders</small>
+            <div class="value" id="orders">4,928</div>
+            <div class="up">▲ 612 idag</div>
+          </div>
+
+          <div class="metric">
+            <small>Conversion Rate</small>
+            <div class="value" id="conversion">8.7%</div>
+            <div class="down">▼ 0.4% checkout dropoff</div>
+          </div>
         </div>
 
-        <div class="card">
-          <small>Orders</small>
-          <div class="value" id="orders">4,928</div>
-          <div class="up">▲ 612 idag</div>
-        </div>
+        <div class="content">
+          <div class="card">
+            <h2>Revenue Overview</h2>
+            <canvas id="revenueChart"></canvas>
+          </div>
 
-        <div class="card">
-          <small>Conversion Rate</small>
-          <div class="value" id="conversion">8.7%</div>
-          <div class="down">▼ 0.4% checkout dropoff</div>
+          <div class="card activity">
+            <h2>Recent Activity</h2>
+            <p>143 besökare online</p>
+            <p>Trafiken ökade 18% senaste timmen</p>
+            <p>Payout pending: 18 240 KR</p>
+            <p>72 ordrar väntar på fulfillment</p>
+            <p>ROAS toppar på 6.9x idag</p>
+          </div>
         </div>
-      </div>
-
-      <div class="content">
-        <div class="card">
-          <h2>Revenue Overview</h2>
-          <canvas id="revenueChart"></canvas>
-        </div>
-
-        <div class="card">
-          <h2>Live Alerts</h2>
-          <p>143 besökare online</p>
-          <p>Trafiken ökade 18% senaste timmen</p>
-          <p>Payout pending: 18 240 KR</p>
-          <p>72 ordrar väntar på fulfillment</p>
-          <p>ROAS toppar på 6.9x idag</p>
-        </div>
-      </div>
+      </section>
 
       <div class="content">
         <div class="card">
@@ -352,6 +453,7 @@
                 <th>Status</th>
               </tr>
             </thead>
+
             <tbody>
               <tr>
                 <td>Smart Bottle Pro</td>
@@ -383,11 +485,29 @@
 
         <div class="card">
           <h2>Marketing Metrics</h2>
-          <p><strong>ROAS:</strong> 5.8x</p>
-          <p><strong>Ad Spend:</strong> 12,480 KR</p>
-          <p><strong>CTR:</strong> 4.9%</p>
-          <p><strong>CPA:</strong> 7.21 KR</p>
-          <p><strong>AOV:</strong> 38.40 KR</p>
+
+          <div class="finance-grid">
+            <div class="finance-row">
+              <span>ROAS</span>
+              <strong>5.8x</strong>
+            </div>
+            <div class="finance-row">
+              <span>Ad Spend</span>
+              <strong>12,480 KR</strong>
+            </div>
+            <div class="finance-row">
+              <span>CTR</span>
+              <strong>4.9%</strong>
+            </div>
+            <div class="finance-row">
+              <span>CPA</span>
+              <strong>7.21 KR</strong>
+            </div>
+            <div class="finance-row">
+              <span>AOV</span>
+              <strong>38.40 KR</strong>
+            </div>
+          </div>
         </div>
       </div>
     </main>
@@ -404,24 +524,24 @@
           label: "Revenue",
           data: [12400, 18800, 24200, 31800, 40200, 55800, 72400],
           borderWidth: 3,
-          tension: 0.4,
+          tension: 0.35,
           fill: true
         }]
       },
       options: {
         plugins: {
           legend: {
-            labels: { color: "#334155" }
+            labels: { color: "#42474c" }
           }
         },
         scales: {
           x: {
-            ticks: { color: "#64748b" },
-            grid: { color: "#e5e7eb" }
+            ticks: { color: "#6d7175" },
+            grid: { color: "#edf0f2" }
           },
           y: {
-            ticks: { color: "#64748b" },
-            grid: { color: "#e5e7eb" }
+            ticks: { color: "#6d7175" },
+            grid: { color: "#edf0f2" }
           }
         }
       }
