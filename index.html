@@ -5,92 +5,122 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Creator Commerce Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <style>
-    * { box-sizing: border-box; font-family: Inter, system-ui, sans-serif; }
+    * {
+      box-sizing: border-box;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
 
     body {
       margin: 0;
-      background: #070b14;
-      color: #eaf0ff;
+      background: #f4f7fb;
+      color: #0f172a;
     }
 
     .app {
       display: grid;
-      grid-template-columns: 260px 1fr;
+      grid-template-columns: 280px 1fr;
       min-height: 100vh;
     }
 
     aside {
-      background: #0b1020;
-      border-right: 1px solid #1e293b;
-      padding: 24px;
+      background: #ffffff;
+      border-right: 1px solid #e5e7eb;
+      padding: 26px 20px;
     }
 
     .logo {
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 900;
-      margin-bottom: 32px;
+      margin-bottom: 34px;
+      color: #0f172a;
     }
 
-    .logo span { color: #4ade80; }
+    .logo span {
+      color: #2563eb;
+    }
 
     nav a {
-      display: block;
+      display: flex;
+      align-items: center;
       padding: 13px 14px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       border-radius: 12px;
-      color: #94a3b8;
+      color: #64748b;
       text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
     }
 
-    nav a.active, nav a:hover {
-      background: #162036;
-      color: white;
+    nav a.active,
+    nav a:hover {
+      background: #eff6ff;
+      color: #2563eb;
     }
 
-    main { padding: 28px; }
+    main {
+      padding: 30px;
+    }
 
     .topbar {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       margin-bottom: 28px;
-      gap: 16px;
+      gap: 18px;
     }
 
-    h1 { margin: 0; font-size: 31px; }
+    h1 {
+      margin: 0;
+      font-size: 32px;
+      letter-spacing: -0.04em;
+    }
 
-    .muted { color: #94a3b8; }
+    h2 {
+      margin-top: 0;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
 
-    .demo-badge {
-      background: rgba(251, 191, 36, .12);
-      color: #fbbf24;
-      border: 1px solid rgba(251, 191, 36, .35);
-      padding: 10px 14px;
-      border-radius: 999px;
-      font-weight: 800;
-      font-size: 13px;
+    .muted {
+      color: #64748b;
+      margin: 7px 0;
     }
 
     .actions {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .demo-badge {
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #bbf7d0;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 13px;
     }
 
     button {
       background: #2563eb;
       color: white;
       border: none;
-      padding: 11px 14px;
+      padding: 11px 16px;
       border-radius: 12px;
       font-weight: 800;
       cursor: pointer;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.22);
     }
 
     button.secondary {
-      background: #172036;
-      color: #cbd5e1;
+      background: #ffffff;
+      color: #334155;
+      border: 1px solid #e2e8f0;
+      box-shadow: none;
     }
 
     .grid {
@@ -101,23 +131,47 @@
     }
 
     .card {
-      background: linear-gradient(180deg, #111827, #0b1220);
-      border: 1px solid #1f2937;
-      border-radius: 18px;
-      padding: 20px;
-      box-shadow: 0 20px 50px rgba(0,0,0,.25);
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
     }
 
-    .card small { color: #94a3b8; }
+    .card small {
+      color: #64748b;
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: .08em;
+    }
 
     .value {
-      font-size: 28px;
-      font-weight: 900;
-      margin-top: 8px;
+      font-size: 31px;
+      font-weight: 950;
+      margin-top: 10px;
+      letter-spacing: -0.04em;
     }
 
-    .up { color: #4ade80; font-size: 13px; margin-top: 8px; }
-    .down { color: #fb7185; font-size: 13px; margin-top: 8px; }
+    .up,
+    .down {
+      display: inline-flex;
+      margin-top: 12px;
+      padding: 6px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .up {
+      color: #047857;
+      background: #ecfdf5;
+    }
+
+    .down {
+      color: #be123c;
+      background: #fff1f2;
+    }
 
     .content {
       display: grid;
@@ -126,51 +180,89 @@
       margin-bottom: 22px;
     }
 
-    canvas { width: 100% !important; max-height: 330px; }
+    canvas {
+      width: 100% !important;
+      max-height: 330px;
+    }
 
     table {
       width: 100%;
       border-collapse: collapse;
+      font-size: 14px;
     }
 
-    th, td {
-      padding: 14px 10px;
-      border-bottom: 1px solid #1e293b;
+    th,
+    td {
+      padding: 15px 10px;
+      border-bottom: 1px solid #eef2f7;
       text-align: left;
     }
 
     th {
-      color: #94a3b8;
-      font-size: 13px;
+      color: #64748b;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    td {
+      color: #0f172a;
+      font-weight: 650;
     }
 
     .pill {
-      padding: 6px 10px;
+      padding: 7px 11px;
       border-radius: 999px;
       font-size: 12px;
-      font-weight: 800;
-      background: rgba(74, 222, 128, .13);
-      color: #4ade80;
+      font-weight: 900;
+      background: #eff6ff;
+      color: #2563eb;
     }
 
     .footer-note {
       position: fixed;
       right: 18px;
       bottom: 18px;
-      background: rgba(251, 191, 36, .12);
-      color: #fbbf24;
-      border: 1px solid rgba(251, 191, 36, .35);
+      background: #ffffff;
+      color: #475569;
+      border: 1px solid #e2e8f0;
       padding: 10px 14px;
-      border-radius: 12px;
+      border-radius: 999px;
       font-size: 12px;
-      backdrop-filter: blur(10px);
+      font-weight: 800;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.1);
     }
 
-    @media (max-width: 950px) {
-      .app { grid-template-columns: 1fr; }
-      aside { display: none; }
-      .grid, .content { grid-template-columns: 1fr; }
-      .topbar { flex-direction: column; align-items: flex-start; }
+    @media (max-width: 1050px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 750px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        display: none;
+      }
+
+      main {
+        padding: 20px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
@@ -195,21 +287,21 @@
       <div class="topbar">
         <div>
           <h1>God Kväll Filip Jonasson</h1>
-          <p class="muted"Creator Commerance Dashboard</p>
+          <p class="muted">Creator Commerce Dashboard</p>
           <p class="muted" style="font-size:13px;">Last updated: <span id="lastUpdated"></span></p>
         </div>
 
         <div class="actions">
-          <div class="demo-badge">● Data</div>
+          <div class="demo-badge">● Data Live</div>
           <button onclick="randomize()">Refresh Data</button>
-          <button class="secondary" onclick="alert( 'CSV export generated')">Export CSV</button>
+          <button class="secondary" onclick="alert('CSV export generated')">Export CSV</button>
         </div>
       </div>
 
       <div class="grid">
         <div class="card">
           <small>Revenue</small>
-          <div class="value" id="revenue"> 128 430 KR</div>
+          <div class="value" id="revenue">128 430 KR</div>
           <div class="up">▲ 38.4% vs förra veckan</div>
         </div>
 
@@ -240,11 +332,11 @@
 
         <div class="card">
           <h2>Live Alerts</h2>
-          <p> 143 besökare online</p>
+          <p>143 besökare online</p>
           <p>Trafiken ökade 18% senaste timmen</p>
-          <p>payout pending: 18 240 KR</p>
+          <p>Payout pending: 18 240 KR</p>
           <p>72 ordrar väntar på fulfillment</p>
-          <p> ROAS toppar på 6.9x idag</p>
+          <p>ROAS toppar på 6.9x idag</p>
         </div>
       </div>
 
@@ -269,8 +361,8 @@
               </tr>
               <tr>
                 <td>LED Desk Lamp</td>
-                <td$31 220 KR</td>
-                <td>9420 KR</td>
+                <td>31 220 KR</td>
+                <td>942</td>
                 <td><span class="pill">Profitable</span></td>
               </tr>
               <tr>
@@ -281,7 +373,7 @@
               </tr>
               <tr>
                 <td>Posture Corrector</td>
-                <td>18 420 KR </td>
+                <td>18 420 KR</td>
                 <td>506</td>
                 <td><span class="pill">Testing</span></td>
               </tr>
@@ -292,7 +384,7 @@
         <div class="card">
           <h2>Marketing Metrics</h2>
           <p><strong>ROAS:</strong> 5.8x</p>
-          <p><strong>Ad Spend:</strong>  12,480 KR</p>
+          <p><strong>Ad Spend:</strong> 12,480 KR</p>
           <p><strong>CTR:</strong> 4.9%</p>
           <p><strong>CPA:</strong> 7.21 KR</p>
           <p><strong>AOV:</strong> 38.40 KR</p>
@@ -319,24 +411,24 @@
       options: {
         plugins: {
           legend: {
-            labels: { color: "#cbd5e1" }
+            labels: { color: "#334155" }
           }
         },
         scales: {
           x: {
-            ticks: { color: "#94a3b8" },
-            grid: { color: "#1e293b" }
+            ticks: { color: "#64748b" },
+            grid: { color: "#e5e7eb" }
           },
           y: {
-            ticks: { color: "#94a3b8" },
-            grid: { color: "#1e293b" }
+            ticks: { color: "#64748b" },
+            grid: { color: "#e5e7eb" }
           }
         }
       }
     });
 
     function money(num) {
-      return "KR" + num.toLocaleString("en-US");
+      return num.toLocaleString("sv-SE") + " KR";
     }
 
     function randomize() {
